@@ -14,7 +14,7 @@ export function SkillCard({ skill, delay = 0 }: SkillCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay }}
-      className="tech-border bg-background/50 p-6 hover:neon-glow transition-all duration-300"
+      className="tech-border bg-slate-50 dark:bg-gray-900/50 border border-slate-200 dark:border-emerald-500/20 p-6 hover:neon-glow transition-all duration-300"
     >
       <div className="flex flex-col items-center">
         <CircularProgress

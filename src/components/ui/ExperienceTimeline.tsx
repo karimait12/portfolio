@@ -23,23 +23,23 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
             className="relative pl-12"
           >
             {/* Timeline dot */}
-            <div className="absolute left-2 top-1 w-4 h-4 bg-background border-2 border-accent rounded-full neon-glow flex items-center justify-center">
+            <div className="absolute left-2 top-1 w-4 h-4 bg-slate-50 dark:bg-gray-900/50 border-2 border-accent rounded-full neon-glow flex items-center justify-center">
               <div className="w-1.5 h-1.5 bg-accent rounded-full" />
             </div>
 
-            <div className="tech-border bg-background/50 p-6 hover:neon-glow transition-all duration-300">
+            <div className="tech-border bg-slate-50 dark:bg-gray-900/50 border border-slate-200 dark:border-emerald-500/20 p-6 hover:neon-glow transition-all duration-300">
               <div className="flex items-start justify-between mb-2">
                 <div className="flex items-center gap-3">
                   <Briefcase size={20} className="text-accent" />
                   <h3 className="text-lg font-bold text-accent">{exp.role}</h3>
                 </div>
-                <span className="text-xs font-mono text-gray-500">
+                <span className="text-xs font-mono text-gray-600 dark:text-gray-600 dark:text-gray-400">
                   {exp.start_date} - {exp.current ? 'Present' : exp.end_date}
                 </span>
               </div>
 
-              <p className="text-sm text-gray-400 font-mono mb-2">{exp.company}</p>
-              <p className="text-gray-400 text-sm font-mono">{exp.description}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 font-mono mb-2">{exp.company}</p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm font-mono">{exp.description}</p>
             </div>
           </motion.div>
         ))}

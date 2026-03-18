@@ -42,7 +42,7 @@ export function ContactForm() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       onSubmit={handleSubmit}
-      className="tech-border bg-background/50 p-8 space-y-6"
+      className="tech-border bg-slate-50 dark:bg-gray-900/50 border border-slate-200 dark:border-emerald-500/20 p-8 space-y-6"
     >
       <div className="grid md:grid-cols-2 gap-6">
         <div className="space-y-2">
