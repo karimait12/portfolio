@@ -7,6 +7,7 @@ import { ProjectCard } from './components/ui/ProjectCard';
 import { SkillCard } from './components/ui/SkillCard';
 import { ExperienceTimeline } from './components/ui/ExperienceTimeline';
 import { ContactForm } from './components/ui/ContactForm';
+import { ScrollProgress } from './components/ScrollProgress';
 import { AdminDashboard } from './pages/admin/Dashboard';
 import { AdminLogin } from './pages/admin/Login';
 import { Project as ProjectType, Skill as SkillType, Experience as ExperienceType } from './lib/supabase/types';
@@ -50,6 +51,7 @@ function Portfolio() {
 
   return (
     <div className="grid-pattern min-h-screen">
+      <ScrollProgress />
       {/* Navbar */}
       <nav className="glass fixed top-0 left-0 right-0 z-50 px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
@@ -70,10 +72,10 @@ function Portfolio() {
             <a href="#projects" className="text-gray-400 hover:text-accent transition-colors font-mono text-sm">Projects</a>
             <a href="#experience" className="text-gray-400 hover:text-accent transition-colors font-mono text-sm">Experience</a>
             <a href="#contact" className="text-gray-400 hover:text-accent transition-colors font-mono text-sm">Contact</a>
-            <a href="https://github.com" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-accent transition-colors">
+            <a href="https://github.com/karimait12/" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-accent transition-colors">
               <Github size={18} />
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-accent transition-colors">
+            <a href="https://www.linkedin.com/in/abdelkarim-ait-yahia-ba2ab33a7/" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-accent transition-colors">
               <Linkedin size={18} />
             </a>
           </motion.div>
@@ -118,6 +120,8 @@ function Portfolio() {
               <span className="font-mono">Contact</span>
             </a>
           </div>
+
+         
         </motion.div>
 
         <motion.div
@@ -130,8 +134,64 @@ function Portfolio() {
         </motion.div>
       </section>
 
+      {/* Quick Stats */}
+      <motion.section
+        className="py-12 px-6 bg-background/60 border-t border-accent-dim"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="max-w-6xl mx-auto">
+          <h3 className="text-2xl sm:text-3xl font-bold mb-6 text-center">
+            <span className="text-accent">./</span> Quick Stats
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[
+              { label: 'Skills', value: skills.length, color: 'bg-blue-500' },
+              { label: 'Projects', value: projects.length, color: 'bg-green-500' },
+              { label: 'Experience Items', value: experiences.length, color: 'bg-violet-500' },
+              { label: 'Years Experience', value: Math.max(1, experiences.length), color: 'bg-rose-500' },
+            ].map((item) => {
+              const percent = Math.min(100, Math.max(20, item.value * 10));
+              return (
+                <motion.div
+                  key={item.label}
+                  className="tech-border p-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  whileHover={{ y: -4 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-mono text-gray-400">{item.label}</span>
+                    <span className="text-xl font-bold text-accent">{item.value}</span>
+                  </div>
+                  <div className="w-full h-3 bg-accent-dim rounded-full overflow-hidden">
+                    <motion.div
+                      className={`${item.color} h-full rounded-full`}
+                      initial={{ width: 0 }}
+                      animate={{ width: `${percent}%` }}
+                      transition={{ duration: 0.6, ease: 'easeOut' }}
+                    />
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </motion.section>
+
       {/* Skills Section */}
-      <section id="skills" className="py-20 px-6">
+      <motion.section
+        id="skills"
+        className="py-20 px-6"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -165,10 +225,17 @@ function Portfolio() {
             </div>
           )}
         </div>
-      </section>
+      </motion.section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 px-6">
+      <motion.section
+        id="projects"
+        className="py-20 px-6"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -202,10 +269,17 @@ function Portfolio() {
             </div>
           )}
         </div>
-      </section>
+      </motion.section>
 
       {/* Experience Section */}
-      <section id="experience" className="py-20 px-6">
+      <motion.section
+        id="experience"
+        className="py-20 px-6"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -229,10 +303,17 @@ function Portfolio() {
             </div>
           )}
         </div>
-      </section>
+      </motion.section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 px-6">
+      <motion.section
+        id="contact"
+        className="py-20 px-6"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="max-w-4xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -248,10 +329,88 @@ function Portfolio() {
 
           <ContactForm />
         </div>
-      </section>
+      </motion.section>
+
+      {/* Work Links Section */}
+      <motion.section
+        id="work-links"
+        className="py-16 px-6 bg-background/40 border-t border-accent-dim"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="max-w-6xl mx-auto text-center">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-3xl font-bold mb-6"
+          >
+            <span className="text-accent">./</span>Work Links
+          </motion.h2>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: {
+                  duration: 0.7,
+                  staggerChildren: 0.12,
+                },
+              },
+            }}
+            className="flex flex-wrap justify-center gap-4"
+          >
+            <motion.a
+              href="https://www.linkedin.com/in/abdelkarim-ait-yahia-ba2ab33a7/"
+              target="_blank"
+              rel="noreferrer"
+              variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
+              className="tech-border px-5 py-3 text-accent hover:bg-accent/10 transition-all flex items-center gap-2"
+            >
+              <Linkedin size={16} />
+              <span className="font-mono">LinkedIn</span>
+              <ExternalLink size={14} className="text-gray-300" />
+            </motion.a>
+            <motion.a
+              href="https://github.com/karimait12/"
+              target="_blank"
+              rel="noreferrer"
+              variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
+              className="tech-border px-5 py-3 text-accent hover:bg-accent/10 transition-all flex items-center gap-2"
+            >
+              <Github size={16} />
+              <span className="font-mono">GitHub</span>
+              <ExternalLink size={14} className="text-gray-300" />
+            </motion.a>
+            <motion.a
+              href="mailto:karimaityahia98@gmail.com"
+              variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }}
+              className="tech-border px-5 py-3 text-accent hover:bg-accent/10 transition-all flex items-center gap-2"
+            >
+              <Mail size={16} />
+              <span className="font-mono">Email</span>
+              <ExternalLink size={14} className="text-gray-300" />
+            </motion.a>
+          </motion.div>
+        </div>
+      </motion.section>
 
       {/* Footer */}
-      <footer className="py-8 px-6 border-t border-accent-dim">
+      <motion.footer
+        className="py-8 px-6 border-t border-accent-dim"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.5 }}
+      >
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <p className="text-gray-500 font-mono text-sm">
             <span className="text-accent">©</span> 2026 Karim Ait Yahia.
@@ -261,7 +420,7 @@ function Portfolio() {
             <span>All systems operational</span>
           </div>
         </div>
-      </footer>
+      </motion.footer>
     </div>
   );
 }
