@@ -122,7 +122,7 @@ function Portfolio() {
             I am Karim Ait Yahia, a 17 y/o from Morocco, a web developer with expertise in multiple programming languages, including HTML, CSS, JavaScript, React, Tailwind and more
           </p>
 
-          <div className="flex items-center  md:gap-4 justify-center">
+          <div className="flex flex-col md:flex-row items-center gap-4 justify-center">
             <a
               href="#projects"
               className="tech-border px-6 py-3 text-accent hover:bg-accent/10 transition-all flex items-center gap-2"
