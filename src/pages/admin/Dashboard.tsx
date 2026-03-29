@@ -14,10 +14,18 @@ export function AdminDashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const session = supabase.auth.getSession();
-    if (!session) {
-      navigate('/admin/login');
-    }
+    const checkSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      const session = data?.session;
+      const role = session?.user?.app_metadata?.role;
+
+      if (!session || role !== 'admin') {
+        await supabase.auth.signOut();
+        navigate('/admin/login');
+      }
+    };
+
+    checkSession();
   }, [navigate]);
 
   const handleLogout = async () => {

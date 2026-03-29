@@ -11,10 +11,17 @@ export function AdminLogin() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const session = supabase.auth.getSession();
-    if (session) {
-      navigate('/admin');
-    }
+    const checkSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      const session = data?.session;
+      const role = session?.user?.app_metadata?.role;
+
+      if (session && role === 'admin') {
+        navigate('/admin');
+      }
+    };
+
+    checkSession();
   }, [navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -23,12 +30,21 @@ export function AdminLogin() {
     setError(null);
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
       if (error) throw error;
+
+      const session = data?.session;
+      const role = session?.user?.app_metadata?.role;
+
+      if (!session || role !== 'admin') {
+        await supabase.auth.signOut();
+        setError('ليس لديك صلاحية المسؤول.');
+        return;
+      }
 
       navigate('/admin');
     } catch (err: unknown) {

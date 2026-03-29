@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { Terminal, Code, Activity, Github, Linkedin, Mail, ChevronDown, ExternalLink } from 'lucide-react';
@@ -59,7 +59,7 @@ function Portfolio() {
             className="flex items-center gap-2 text-accent font-mono text-lg"
           >
             <Terminal size={20} />
-            <span>dev@portfolio</span>
+            <span></span>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -70,9 +70,6 @@ function Portfolio() {
             <a href="#projects" className="text-gray-400 hover:text-accent transition-colors font-mono text-sm">Projects</a>
             <a href="#experience" className="text-gray-400 hover:text-accent transition-colors font-mono text-sm">Experience</a>
             <a href="#contact" className="text-gray-400 hover:text-accent transition-colors font-mono text-sm">Contact</a>
-            <Link to="/admin/login" className="text-gray-500 hover:text-accent transition-colors">
-              <Terminal size={18} />
-            </Link>
             <a href="https://github.com" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-accent transition-colors">
               <Github size={18} />
             </a>
@@ -97,13 +94,12 @@ function Portfolio() {
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold mb-6 neon-glow-text">
-            <span className="text-accent">{'>'}</span> Engineering the{' '}
-            <span className="text-accent">Agentic Future</span>
+            <span className="text-accent">{'>'}</span> Software{' '}
+            <span className="text-accent text-center">Engineer</span>
           </h1>
 
           <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-8 font-mono">
-            Building autonomous systems that scale. Full-stack engineer specializing in
-            AI infrastructure and distributed architectures.
+            I am Karim Ait Yahia, a 17 y/o from Morocco, a web developer with expertise in multiple programming languages, including HTML, CSS, JavaScript, React, Tailwind and more
           </p>
 
           <div className="flex items-center gap-4 justify-center">
@@ -258,7 +254,7 @@ function Portfolio() {
       <footer className="py-8 px-6 border-t border-accent-dim">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <p className="text-gray-500 font-mono text-sm">
-            <span className="text-accent">©</span> 2026. Built with React + Tailwind + Supabase
+            <span className="text-accent">©</span> 2026 Karim Ait Yahia.
           </p>
           <div className="flex items-center gap-2 text-gray-500 font-mono text-sm">
             <span className="w-2 h-2 bg-accent rounded-full animate-blink" />
@@ -270,13 +266,52 @@ function Portfolio() {
   );
 }
 
+function AdminRoute({ children }: { children: React.ReactNode }) {
+  const [loading, setLoading] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      const session = data?.session;
+      const role = session?.user?.app_metadata?.role;
+
+      if (session && role === 'admin') {
+        setAuthenticated(true);
+      } else {
+        setAuthenticated(false);
+      }
+      setLoading(false);
+    };
+
+    checkSession();
+  }, []);
+
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">Checking access...</div>;
+  }
+
+  if (!authenticated) {
+    return <Navigate to="/admin/login" replace />;
+  }
+
+  return <>{children}</>;
+}
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Portfolio />} />
         <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

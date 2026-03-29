@@ -53,7 +53,7 @@ export function ContactForm() {
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             required
             className="w-full bg-background/80 border border-accent-dim text-gray-300 px-4 py-3 font-mono focus:outline-none focus:border-accent focus:neon-glow transition-all"
-            placeholder="John Doe"
+            placeholder="Username"
           />
         </div>
 
@@ -65,7 +65,7 @@ export function ContactForm() {
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             required
             className="w-full bg-background/80 border border-accent-dim text-gray-300 px-4 py-3 font-mono focus:outline-none focus:border-accent focus:neon-glow transition-all"
-            placeholder="john@example.com"
+            placeholder="@example.com"
           />
         </div>
       </div>
