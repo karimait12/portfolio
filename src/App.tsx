@@ -49,11 +49,15 @@ function Portfolio() {
     },
   };
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+
   return (
     <div className="grid-pattern min-h-screen">
       <ScrollProgress />
       {/* Navbar */}
-      <nav className="glass fixed top-0 left-0 right-0 z-50 px-6 py-4">
+      <nav className="glass fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -63,23 +67,37 @@ function Portfolio() {
             <Terminal size={20} />
             <span></span>
           </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-6"
-          >
-            <a href="#skills" className="text-gray-400 hover:text-accent transition-colors font-mono text-sm">Skills</a>
-            <a href="#projects" className="text-gray-400 hover:text-accent transition-colors font-mono text-sm">Projects</a>
-            <a href="#experience" className="text-gray-400 hover:text-accent transition-colors font-mono text-sm">Experience</a>
-            <a href="#contact" className="text-gray-400 hover:text-accent transition-colors font-mono text-sm">Contact</a>
-            <a href="https://github.com/karimait12/" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-accent transition-colors">
-              <Github size={18} />
-            </a>
-            <a href="https://www.linkedin.com/in/abdelkarim-ait-yahia-ba2ab33a7/" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-accent transition-colors">
-              <Linkedin size={18} />
-            </a>
-          </motion.div>
+          <div className="flex items-center gap-4">
+            <div className="hidden md:flex items-center gap-6">
+              <a href="#skills" className="text-gray-400 hover:text-accent transition-colors font-mono text-sm">Skills</a>
+              <a href="#projects" className="text-gray-400 hover:text-accent transition-colors font-mono text-sm">Projects</a>
+              <a href="#experience" className="text-gray-400 hover:text-accent transition-colors font-mono text-sm">Experience</a>
+              <a href="#contact" className="text-gray-400 hover:text-accent transition-colors font-mono text-sm">Contact</a>
+              <a href="https://github.com/karimait12/" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-accent transition-colors">
+                <Github size={18} />
+              </a>
+              <a href="https://www.linkedin.com/in/abdelkarim-ait-yahia-ba2ab33a7/" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-accent transition-colors">
+                <Linkedin size={18} />
+              </a>
+            </div>
+            <button onClick={toggleMenu} className="md:hidden text-gray-400 hover:text-accent" aria-label="Toggle navigation">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
         </div>
+
+        {isMenuOpen && (
+          <div className="md:hidden mt-4 bg-background/90 border border-accent-dim rounded-xl p-4 shadow-lg">
+            <a href="#skills" className="block mb-2 text-gray-300 hover:text-accent font-mono text-base" onClick={() => setIsMenuOpen(false)}>Skills</a>
+            <a href="#projects" className="block mb-2 text-gray-300 hover:text-accent font-mono text-base" onClick={() => setIsMenuOpen(false)}>Projects</a>
+            <a href="#experience" className="block mb-2 text-gray-300 hover:text-accent font-mono text-base" onClick={() => setIsMenuOpen(false)}>Experience</a>
+            <a href="#contact" className="block mb-2 text-gray-300 hover:text-accent font-mono text-base" onClick={() => setIsMenuOpen(false)}>Contact</a>
+            <a href="https://github.com/karimait12/" target="_blank" rel="noreferrer" className="block mb-2 text-gray-300 hover:text-accent font-mono text-base">GitHub</a>
+            <a href="https://www.linkedin.com/in/abdelkarim-ait-yahia-ba2ab33a7/" target="_blank" rel="noreferrer" className="block text-gray-300 hover:text-accent font-mono text-base">LinkedIn</a>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
