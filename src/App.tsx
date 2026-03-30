@@ -316,7 +316,7 @@ function Portfolio() {
           ) : (
             <div className="tech-border bg-background/50 p-8 text-center">
               <p className="text-gray-400 font-mono">
-                {loading ? 'Loading experience...' : 'No experience configured. Add via admin panel.'}
+                {loading ? 'Loading experience...' : 'No experience configured.'}
               </p>
             </div>
           )}
