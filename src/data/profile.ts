@@ -17,9 +17,9 @@ export const profile = {
   cvUrl: '/cv.pdf',
   photo: '/me.png',
   socials: [
-    { label: 'GitHub', href: 'https://github.com/ka', icon: 'github' },
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/', icon: 'linkedin' },
-    { label: 'Instagram', href: 'https://www.instagram.com/', icon: 'instagram' },
+    { label: 'GitHub', href: 'https://github.com/karimait16', icon: 'github' },
+    { label: 'LinkedIn', href: 'https://ma.linkedin.com/in/abdelkarim-ait-yahia-ba2ab33a7', icon: 'linkedin' },
+    { label: 'Instagram', href: 'https://www.instagram.com/aityahiae', icon: 'instagram' },
   ] as Social[],
 };
 

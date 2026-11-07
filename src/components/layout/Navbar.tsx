@@ -60,7 +60,7 @@ export function Navbar() {
             className="grid h-8 w-8 place-items-center rounded-full font-display text-sm"
             style={{ background: 'var(--accent)', color: 'var(--accent-contrast)' }}
           >
-            AR
+            AA
           </span>
         </a>
         <ul className="hidden sm:flex items-center gap-1">

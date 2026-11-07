@@ -71,7 +71,7 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t pt-6 md:flex-row md:items-center" style={{ borderColor: 'var(--border)' }}>
           <p className="font-mono text-[11px] text-muted">© {new Date().getFullYear()} {profile.name}. All rights reserved.</p>
-          <p className="font-mono text-[11px] text-muted">Built with React, Framer Motion & Lenis.</p>
+          <p className="font-mono text-[11px] text-muted"></p>
         </div>
       </div>
 
