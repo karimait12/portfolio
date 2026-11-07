@@ -7,6 +7,7 @@ import { profile } from '../../data/profile';
 export function Contact() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [website, setWebsite] = useState('');
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [errors, setErrors] = useState<{ email?: string; message?: string }>({});
 
@@ -20,16 +21,44 @@ export function Contact() {
 
   const handleSubmit = async (ev: React.FormEvent) => {
     ev.preventDefault();
+    if (status === 'submitting') return;
     if (!validate()) return;
     setStatus('submitting');
     try {
-      const { error } = await supabase.from('messages').insert([
-        { name: email.split('@')[0] || 'Visitor', email, message, status: 'new' },
+      const name = email.split('@')[0] || 'Visitor';
+
+      const supabasePromise = supabase.from('messages').insert([
+        { name, email, message, status: 'new' },
       ]);
-      if (error) throw error;
+
+      const telegramPromise = fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message, website }),
+      });
+
+      const [sbResult, tgResult] = await Promise.allSettled([supabasePromise, telegramPromise]);
+
+      let tgOk = false;
+      if (tgResult.status === 'fulfilled') {
+        try {
+          const data = await tgResult.value.json();
+          tgOk = Boolean(data?.ok);
+        } catch {
+          tgOk = tgResult.value.ok;
+        }
+      }
+
+      const sbOk = sbResult.status === 'fulfilled' && !sbResult.value.error;
+
+      if (!tgOk && !sbOk) {
+        throw new Error('failed');
+      }
+
       setStatus('success');
       setEmail('');
       setMessage('');
+      setWebsite('');
       setTimeout(() => setStatus('idle'), 3000);
     } catch {
       setStatus('error');
@@ -122,6 +151,16 @@ export function Contact() {
               />
               {errors.message && <p className="font-mono text-[11px] text-red-400">{errors.message}</p>}
             </div>
+            <input
+              type="text"
+              name="website"
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0, width: 0 }}
+            />
             <button
               type="submit"
               disabled={status === 'submitting'}
