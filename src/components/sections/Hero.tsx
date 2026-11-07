@@ -28,7 +28,7 @@ export function Hero() {
             </svg>
           </motion.div>
           <div
-            className="absolute inset-[14%] overflow-hidden rounded-2xl border"
+            className="absolute inset-[14%] overflow-hidden rounded-full border"
             style={{ borderColor: 'var(--border)', background: 'var(--surface)' }}
           >
             <img
@@ -40,7 +40,7 @@ export function Hero() {
               }}
             />
             <div className="absolute inset-0 grid place-items-center font-display text-6xl text-muted/40">
-              AR
+              
             </div>
           </div>
         </div>
