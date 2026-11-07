@@ -9,7 +9,7 @@ export const profile = {
   monoLabel: 'ABDELKARIM AITYAHIA • SOFTWARE DEVELOPER',
   headline: 'BUILDING DIGITAL PRODUCTS WITH CLARITY AND CRAFT.',
   headlineLines: ['BUILDING', 'DIGITAL', 'PRODUCTS.'],
-  bio: 'I design and build fast, accessible web experiences. Placeholder bio — replace with your own story, focus areas, and the kind of work you want to be hired for.',
+  bio: '',
   email: 'karimaityahiaa@gmail.com',
   location: 'Somewhere, Earth',
   role: 'Software Developer',

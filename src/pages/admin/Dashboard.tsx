@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase/client';
-import { LayoutDashboard, Code, Briefcase, Mail, LogOut, Terminal } from 'lucide-react';
+import { LayoutDashboard, Code, Briefcase, Mail, LogOut, Terminal, BarChart3 } from 'lucide-react';
 import { ProjectsManager } from './ProjectsManager';
 import { SkillsManager } from './SkillsManager';
 import { ExperienceManager } from './ExperienceManager';
 import { MessagesManager } from './MessagesManager';
+import { AnalyticsManager } from './AnalyticsManager';
 
-type Tab = 'projects' | 'skills' | 'experience' | 'messages';
+type Tab = 'projects' | 'skills' | 'experience' | 'messages' | 'analytics';
 
 export function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<Tab>('projects');
@@ -38,6 +39,7 @@ export function AdminDashboard() {
     { id: 'skills', label: 'Skills', icon: <LayoutDashboard size={18} /> },
     { id: 'experience', label: 'Experience', icon: <Briefcase size={18} /> },
     { id: 'messages', label: 'Messages', icon: <Mail size={18} /> },
+    { id: 'analytics', label: 'Analytics', icon: <BarChart3 size={18} /> },
   ];
 
   return (
@@ -93,6 +95,7 @@ export function AdminDashboard() {
             {activeTab === 'skills' && <SkillsManager />}
             {activeTab === 'experience' && <ExperienceManager />}
             {activeTab === 'messages' && <MessagesManager />}
+            {activeTab === 'analytics' && <AnalyticsManager />}
           </div>
         </div>
       </main>

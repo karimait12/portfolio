@@ -13,6 +13,8 @@ const AdminDashboard = lazy(() => import('./pages/admin/Dashboard'));
 const AdminLogin = lazy(() => import('./pages/admin/Login'));
 import { supabase } from './lib/supabase/client';
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { startAnalytics, trackPageView } from './lib/analytics';
 
 function Portfolio() {
   return (
@@ -63,10 +65,23 @@ function AdminRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+function AnalyticsTracker() {
+  const location = useLocation();
+  useEffect(() => {
+    startAnalytics();
+  }, []);
+  useEffect(() => {
+    trackPageView(location.pathname);
+  }, [location.pathname]);
+  return null;
+}
+
 function AppRoutes() {
   useLenis();
   return (
-    <Routes>
+    <>
+      <AnalyticsTracker />
+      <Routes>
       <Route path="/" element={<Portfolio />} />
       <Route path="/admin/login" element={<Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}><AdminLogin /></Suspense>} />
       <Route
@@ -78,6 +93,7 @@ function AppRoutes() {
         }
       />
     </Routes>
+    </>
   );
 }
 
