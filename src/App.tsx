@@ -13,6 +13,7 @@ const AdminDashboard = lazy(() => import('./pages/admin/Dashboard'));
 const AdminLogin = lazy(() => import('./pages/admin/Login'));
 import { supabase } from './lib/supabase/client';
 import { useState, useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 
 function Portfolio() {
   return (
@@ -86,6 +87,7 @@ function App() {
     <ThemeProvider>
       <BrowserRouter>
         <AppRoutes />
+        <Analytics />
       </BrowserRouter>
     </ThemeProvider>
   );
