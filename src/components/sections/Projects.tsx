@@ -5,11 +5,10 @@ import { projects } from '../../data/projects';
 
 function ProjectCard({ project, index, total, progress }: { project: (typeof projects)[number]; index: number; total: number; progress: ReturnType<typeof useScroll>['scrollYProgress'] }) {
   const isLast = index === total - 1;
-  const input = isLast
-    ? [0, 1]
-    : [index / total, (index + 1) / total, 1];
-  const outputScale = isLast ? [1, 1] : [1, 0.94, 0.94];
-  const outputOpacity = isLast ? [1, 1] : [1, 0.5, 0.5];
+  const start = index / total;
+  const input = isLast ? [0, 1] : [start, 1];
+  const outputScale = isLast ? [1, 1] : [1, 0.94];
+  const outputOpacity = isLast ? [1, 1] : [1, 0.6];
   const scale = useTransform(progress, input, outputScale);
   const opacity = useTransform(progress, input, outputOpacity);
 
@@ -22,16 +21,17 @@ function ProjectCard({ project, index, total, progress }: { project: (typeof pro
         zIndex: index + 1,
         transformOrigin: 'top center',
       }}
-      className="sticky mb-6 overflow-hidden rounded-3xl border"
+      className="sticky mb-6 min-h-[70vh] overflow-hidden rounded-3xl border"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
     >
       <div
-        className={`grid gap-0 md:grid-cols-2 ${project.tint} bg-gradient-to-br`}
+        className="relative grid gap-0 md:grid-cols-2"
         style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
       >
+        <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${project.tint}`} />
         <div className="relative aspect-[4/3] overflow-hidden md:aspect-auto">
           <div
             className={`absolute inset-0 bg-gradient-to-br ${project.tint}`}
