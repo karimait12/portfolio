@@ -22,7 +22,7 @@ function ProjectCard({ project, index, total, progress }: { project: ProjectItem
         zIndex: index + 1,
         transformOrigin: 'top center',
       }}
-      className="sticky mb-6 min-h-[70vh] overflow-hidden rounded-3xl border"
+      className="sticky mb-6 min-h-[0vh] overflow-hidden rounded-3xl border"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
@@ -96,28 +96,37 @@ function ProjectCard({ project, index, total, progress }: { project: ProjectItem
 export function Projects() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
-  const [items, setItems] = useState<ProjectItem[]>(staticProjects);
+  const [items, setItems] = useState<ProjectItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
         const { data, error } = await supabase.from('projects').select('*').order('created_at', { ascending: false });
-        if (cancelled || error || !data || data.length === 0) return;
-        const mapped: ProjectItem[] = data.map((d: any, i: number) => ({
-          id: d.id ?? `proj-${i}`,
-          index: `${String(i + 1).padStart(2, '0')} / ${String(data.length).padStart(2, '0')}`,
-          title: (d.title ?? '').toUpperCase(),
-          description: d.description ?? '',
-          tags: d.tags ?? [],
-          liveUrl: d.live_url ?? '#',
-          repoUrl: d.github_url ?? '#',
-          image: d.image_url ?? `/projects/${i + 1}.jpg`,
-          tint: ['from-white/10 to-white/0', 'from-white/8 to-white/0', 'from-white/6 to-white/0', 'from-white/5 to-white/0'][i % 4],
-        }));
-        setItems(mapped);
+        if (cancelled) return;
+        if (error || !data || data.length === 0) {
+          setItems(staticProjects);
+        } else {
+          const mapped: ProjectItem[] = data.map((d: any, i: number) => ({
+            id: d.id ?? `proj-${i}`,
+            index: `${String(i + 1).padStart(2, '0')} / ${String(data.length).padStart(2, '0')}`,
+            title: (d.title ?? '').toUpperCase(),
+            description: d.description ?? '',
+            tags: d.tags ?? [],
+            liveUrl: d.live_url ?? '#',
+            repoUrl: d.github_url ?? '#',
+            image: d.image_url ?? `/projects/${i + 1}.jpg`,
+            tint: ['from-white/10 to-white/0', 'from-white/8 to-white/0', 'from-white/6 to-white/0', 'from-white/5 to-white/0'][i % 4],
+          }));
+          setItems(mapped);
+        }
+        setLoading(false);
       } catch {
-        /* keep static fallback */
+        if (!cancelled) {
+          setItems(staticProjects);
+          setLoading(false);
+        }
       }
     })();
     return () => { cancelled = true; };
@@ -138,9 +147,14 @@ export function Projects() {
         </motion.div>
 
         <div className="relative">
-          {items.map((p, i) => (
+          {loading ? (
+            <div className="flex items-center justify-center py-16">
+              <span className="h-8 w-8 animate-spin rounded-full border-2 border-t-transparent" style={{ borderColor: 'var(--border)', borderTopColor: 'var(--accent)' }} />
+            </div>
+          ) : (
+            items.map((p, i) => (
             <ProjectCard key={p.id} project={p} index={i} total={items.length} progress={scrollYProgress} />
-          ))}
+          )))}
         </div>
       </div>
     </section>

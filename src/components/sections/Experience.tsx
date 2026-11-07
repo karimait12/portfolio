@@ -8,7 +8,8 @@ export function Experience() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.8', 'end 0.2'] });
   const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
-  const [items, setItems] = useState<ExperienceItem[]>(staticExperiences);
+  const [items, setItems] = useState<ExperienceItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
@@ -18,21 +19,29 @@ export function Experience() {
           .from('experience')
           .select('*')
           .order('start_date', { ascending: false });
-        if (cancelled || error || !data || data.length === 0) return;
-        const mapped: ExperienceItem[] = data.map((d: any, i: number) => ({
-          id: d.id ?? `exp-${i}`,
-          company: d.company,
-          companyType: d.company_type ?? 'Company',
-          role: (d.role ?? '').toUpperCase(),
-          start: d.start_date,
-          end: d.current ? 'Present' : (d.end_date ?? ''),
-          duration: d.duration ?? '',
-          description: d.description,
-          current: d.current,
-        }));
-        setItems(mapped);
+        if (cancelled) return;
+        if (error || !data || data.length === 0) {
+          setItems(staticExperiences);
+        } else {
+          const mapped: ExperienceItem[] = data.map((d: any, i: number) => ({
+            id: d.id ?? `exp-${i}`,
+            company: d.company,
+            companyType: d.company_type ?? 'Company',
+            role: (d.role ?? '').toUpperCase(),
+            start: d.start_date,
+            end: d.current ? 'Present' : (d.end_date ?? ''),
+            duration: d.duration ?? '',
+            description: d.description,
+            current: d.current,
+          }));
+          setItems(mapped);
+        }
+        setLoading(false);
       } catch {
-        /* keep static fallback */
+        if (!cancelled) {
+          setItems(staticExperiences);
+          setLoading(false);
+        }
       }
     })();
     return () => { cancelled = true; };
@@ -73,7 +82,12 @@ export function Experience() {
           />
 
           <div className="space-y-8" style={{ maskImage: 'linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%)' }}>
-            {items.map((e, i) => (
+            {loading ? (
+              <div className="flex items-center justify-center py-16">
+                <span className="h-8 w-8 animate-spin rounded-full border-2 border-t-transparent" style={{ borderColor: 'var(--border)', borderTopColor: 'var(--accent)' }} />
+              </div>
+            ) : (
+              items.map((e, i) => (
               <motion.article
                 key={e.id}
                 initial={{ opacity: 0, y: 40 }}
@@ -113,7 +127,7 @@ export function Experience() {
                   <p className="mt-3 text-sm leading-relaxed text-muted">{e.description}</p>
                 </div>
               </motion.article>
-            ))}
+            )))}
           </div>
         </div>
       </div>
