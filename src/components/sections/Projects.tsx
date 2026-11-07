@@ -1,9 +1,10 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowUpRight, Github } from 'lucide-react';
-import { projects } from '../../data/projects';
+import { supabase } from '../../lib/supabase/client';
+import { projects as staticProjects, ProjectItem } from '../../data/projects';
 
-function ProjectCard({ project, index, total, progress }: { project: (typeof projects)[number]; index: number; total: number; progress: ReturnType<typeof useScroll>['scrollYProgress'] }) {
+function ProjectCard({ project, index, total, progress }: { project: ProjectItem; index: number; total: number; progress: ReturnType<typeof useScroll>['scrollYProgress'] }) {
   const isLast = index === total - 1;
   const start = index / total;
   const input = isLast ? [0, 1] : [start, 1];
@@ -95,6 +96,32 @@ function ProjectCard({ project, index, total, progress }: { project: (typeof pro
 export function Projects() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  const [items, setItems] = useState<ProjectItem[]>(staticProjects);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data, error } = await supabase.from('projects').select('*').order('created_at', { ascending: false });
+        if (cancelled || error || !data || data.length === 0) return;
+        const mapped: ProjectItem[] = data.map((d: any, i: number) => ({
+          id: d.id ?? `proj-${i}`,
+          index: `${String(i + 1).padStart(2, '0')} / ${String(data.length).padStart(2, '0')}`,
+          title: (d.title ?? '').toUpperCase(),
+          description: d.description ?? '',
+          tags: d.tags ?? [],
+          liveUrl: d.live_url ?? '#',
+          repoUrl: d.github_url ?? '#',
+          image: d.image_url ?? `/projects/${i + 1}.jpg`,
+          tint: ['from-white/10 to-white/0', 'from-white/8 to-white/0', 'from-white/6 to-white/0', 'from-white/5 to-white/0'][i % 4],
+        }));
+        setItems(mapped);
+      } catch {
+        /* keep static fallback */
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
 
   return (
     <section id="projects" ref={ref} className="relative px-6 py-24">
@@ -111,8 +138,8 @@ export function Projects() {
         </motion.div>
 
         <div className="relative">
-          {projects.map((p, i) => (
-            <ProjectCard key={p.id} project={p} index={i} total={projects.length} progress={scrollYProgress} />
+          {items.map((p, i) => (
+            <ProjectCard key={p.id} project={p} index={i} total={items.length} progress={scrollYProgress} />
           ))}
         </div>
       </div>

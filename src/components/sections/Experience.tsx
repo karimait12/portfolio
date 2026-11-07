@@ -1,11 +1,42 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { experiences } from '../../data/experience';
+import { supabase } from '../../lib/supabase/client';
+import { experiences as staticExperiences, ExperienceItem } from '../../data/experience';
 
 export function Experience() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.8', 'end 0.2'] });
   const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
+  const [items, setItems] = useState<ExperienceItem[]>(staticExperiences);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data, error } = await supabase
+          .from('experience')
+          .select('*')
+          .order('start_date', { ascending: false });
+        if (cancelled || error || !data || data.length === 0) return;
+        const mapped: ExperienceItem[] = data.map((d: any, i: number) => ({
+          id: d.id ?? `exp-${i}`,
+          company: d.company,
+          companyType: d.company_type ?? 'Company',
+          role: (d.role ?? '').toUpperCase(),
+          start: d.start_date,
+          end: d.current ? 'Present' : (d.end_date ?? ''),
+          duration: d.duration ?? '',
+          description: d.description,
+          current: d.current,
+        }));
+        setItems(mapped);
+      } catch {
+        /* keep static fallback */
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
 
   return (
     <section id="experience" ref={ref} className="relative overflow-hidden px-6 py-24">
@@ -35,7 +66,6 @@ export function Experience() {
         </motion.div>
 
         <div className="relative pl-8 md:pl-12">
-          {/* line */}
           <div className="absolute left-3 top-0 h-full w-px md:left-5" style={{ background: 'var(--border)' }} />
           <motion.div
             className="absolute left-3 top-0 w-px origin-top md:left-5"
@@ -43,7 +73,7 @@ export function Experience() {
           />
 
           <div className="space-y-8" style={{ maskImage: 'linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%)' }}>
-            {experiences.map((e, i) => (
+            {items.map((e, i) => (
               <motion.article
                 key={e.id}
                 initial={{ opacity: 0, y: 40 }}
@@ -52,7 +82,6 @@ export function Experience() {
                 transition={{ duration: 0.6, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
                 className="relative"
               >
-                {/* dot */}
                 <motion.span
                   initial={{ scale: 0.6, opacity: 0.4 }}
                   whileInView={{ scale: 1, opacity: 1 }}
@@ -76,7 +105,7 @@ export function Experience() {
                       {e.companyType}
                     </span>
                     <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
-                      {e.start} — {e.end} · {e.duration}
+                      {e.start} — {e.end}{e.duration ? ` · ${e.duration}` : ''}
                     </span>
                   </div>
                   <h3 className="mt-3 font-display text-2xl md:text-3xl">{e.company}</h3>
