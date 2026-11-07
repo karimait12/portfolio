@@ -33,7 +33,9 @@ export function Hero() {
           >
             <img
               src={profile.photo}
-              alt={profile.name}
+              alt="Abdelkarim Ait Yahia (abdelkarimaityahia)"
+              width={360}
+              height={360}
               className="h-full w-full object-cover"
               onError={(e) => {
                 (e.currentTarget as HTMLImageElement).style.display = 'none';
@@ -57,6 +59,7 @@ export function Hero() {
           </motion.p>
 
           <h1 className="mt-4 font-display leading-[0.95] tracking-tight" style={{ fontSize: 'clamp(3rem, 8vw, 7rem)' }}>
+            <span className="sr-only">Abdelkarim Ait Yahia</span>
             {profile.headlineLines.map((line, i) => (
               <span key={i} className="block overflow-hidden">
                 <motion.span

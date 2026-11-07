@@ -1,5 +1,18 @@
 {
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": ".*\\.vercel\\.app"
+        }
+      ],
+      "destination": "https://abdelkarimaityahia.is-a.dev/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    { "source": "/((?!api/|robots\\.txt|sitemap\\.xml).*)", "destination": "/index.html" }
   ]
 }
