@@ -2,8 +2,6 @@ import { motion } from 'framer-motion';
 import { stack } from '../data/stack';
 
 export function Stack() {
-  const items = [...stack, ...stack];
-
   return (
     <section id="stack" className="px-6 py-24">
       <motion.div
@@ -29,20 +27,36 @@ export function Stack() {
         }}
       >
         <div className="stack-marquee flex w-max items-center gap-12">
-          {items.map((item, i) => {
+          {stack.map((item, i) => {
             const Icon = item.icon;
             return (
               <div
                 key={`${item.name}-${i}`}
                 className="group flex flex-col items-center gap-3 transition-transform duration-200 hover:-translate-y-1"
               >
-                <Icon className="h-11 w-11 text-muted transition-colors duration-200 group-hover:text-text md:h-14 md:w-14" />
+                <Icon aria-hidden="true" focusable="false" className="h-11 w-11 text-muted transition-colors duration-200 group-hover:text-text md:h-14 md:w-14" />
                 <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted transition-colors duration-200 group-hover:text-text md:text-[12px]">
                   {item.name}
                 </span>
               </div>
             );
           })}
+        <div className="contents" aria-hidden="true">
+          {stack.map((item, i) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={`dup-${item.name}-${i}`}
+                className="group flex flex-col items-center gap-3 transition-transform duration-200 hover:-translate-y-1"
+              >
+                <Icon aria-hidden="true" focusable="false" className="h-11 w-11 text-muted transition-colors duration-200 group-hover:text-text md:h-14 md:w-14" />
+                <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted transition-colors duration-200 group-hover:text-text md:text-[12px]">
+                  {item.name}
+                </span>
+              </div>
+            );
+          })}
+        </div>
         </div>
       </div>
     </section>

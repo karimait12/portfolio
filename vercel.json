@@ -13,6 +13,6 @@
     }
   ],
   "rewrites": [
-    { "source": "/((?!api/|robots\\.txt|sitemap\\.xml).*)", "destination": "/index.html" }
+    { "source": "/((?!api/|\\.well-known/|llms\\.txt|robots\\.txt|sitemap\\.xml).*)", "destination": "/index.html" }
   ]
 }
