@@ -7,8 +7,9 @@ import { Hero } from './components/sections/Hero';
 import { Experience } from './components/sections/Experience';
 import { Projects } from './components/sections/Projects';
 import { Contact } from './components/sections/Contact';
-import { AdminDashboard } from './pages/admin/Dashboard';
-import { AdminLogin } from './pages/admin/Login';
+import { lazy, Suspense } from 'react';
+const AdminDashboard = lazy(() => import('./pages/admin/Dashboard'));
+const AdminLogin = lazy(() => import('./pages/admin/Login'));
 import { supabase } from './lib/supabase/client';
 import { useState, useEffect } from 'react';
 
@@ -64,12 +65,12 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Portfolio />} />
-      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin/login" element={<Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}><AdminLogin /></Suspense>} />
       <Route
         path="/admin"
         element={
           <AdminRoute>
-            <AdminDashboard />
+            <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}><AdminDashboard /></Suspense>
           </AdminRoute>
         }
       />

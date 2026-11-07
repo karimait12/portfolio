@@ -15,7 +15,7 @@ export const profile = {
   role: 'Software Developer',
   available: true,
   cvUrl: '/cv.pdf',
-  photo: '/me.jpg',
+  photo: '/me.png',
   socials: [
     { label: 'GitHub', href: 'https://github.com/ka', icon: 'github' },
     { label: 'LinkedIn', href: 'https://www.linkedin.com/', icon: 'linkedin' },
