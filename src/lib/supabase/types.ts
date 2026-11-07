@@ -16,7 +16,7 @@ export interface Skill {
   category: string;
   proficiency: number;
   icon?: string;
-  order: number;
+  order_index: number;
 }
 
 export interface Experience {

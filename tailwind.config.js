@@ -1,12 +1,9 @@
-import type { Config } from 'tailwindcss';
-
+/** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: 'class', // ضروري بزاف هاد السطر
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  darkMode: 'class',
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
-      darkMode: " class",
       colors: {
         background: '#020617',
         accent: '#22c55e',
@@ -33,4 +30,4 @@ export default {
     },
   },
   plugins: [],
-} satisfies Config;
+};

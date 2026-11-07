@@ -9,6 +9,7 @@ export function SkillsManager() {
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState<SkillType | null>(null);
   const [showForm, setShowForm] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const emptySkill: SkillType = {
     id: '',
@@ -16,7 +17,7 @@ export function SkillsManager() {
     category: '',
     proficiency: 50,
     icon: '',
-    order: 0,
+    order_index: 0,
   };
 
   useEffect(() => {
@@ -27,8 +28,11 @@ export function SkillsManager() {
     const { data, error } = await supabase.from('skills').select('*').order('order_index');
     if (error) {
       console.error('Error fetching skills:', error);
+      setError(error.message);
+      setLoading(false);
       return;
     }
+    setError(null);
     setSkills(data || []);
     setLoading(false);
   };
@@ -36,16 +40,23 @@ export function SkillsManager() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editing) return;
-
-    if (editing.id) {
-      await supabase.from('skills').update(editing).eq('id', editing.id);
-    } else {
-      await supabase.from('skills').insert([{ ...editing, id: crypto.randomUUID() }]);
+    setError(null);
+    try {
+      if (editing.id) {
+        const { error } = await supabase.from('skills').update(editing).eq('id', editing.id);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from('skills').insert([{ ...editing, id: crypto.randomUUID() }]);
+        if (error) throw error;
+      }
+      fetchSkills();
+      setShowForm(false);
+      setEditing(null);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Failed to save skill';
+      setError(message);
+      console.error('Save error:', err);
     }
-
-    fetchSkills();
-    setShowForm(false);
-    setEditing(null);
   };
 
   const handleDelete = async (id: string) => {
@@ -63,6 +74,11 @@ export function SkillsManager() {
 
   return (
     <div className="space-y-6">
+      {error && (
+        <div className="bg-red-900/20 border border-red-500/50 p-3 flex items-center gap-2">
+          <span className="text-red-400 text-sm font-mono">{error}</span>
+        </div>
+      )}
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold text-accent">Skills</h2>
         <button

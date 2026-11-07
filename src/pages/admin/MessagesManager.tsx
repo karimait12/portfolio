@@ -6,6 +6,7 @@ import { Mail, Trash2, Check } from 'lucide-react';
 export function MessagesManager() {
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchMessages();
@@ -15,8 +16,11 @@ export function MessagesManager() {
     const { data, error } = await supabase.from('messages').select('*').order('created_at', { ascending: false });
     if (error) {
       console.error('Error fetching messages:', error);
+      setError(error.message);
+      setLoading(false);
       return;
     }
+    setError(null);
     setMessages(data || []);
     setLoading(false);
   };
@@ -35,6 +39,11 @@ export function MessagesManager() {
 
   return (
     <div className="space-y-6">
+      {error && (
+        <div className="bg-red-900/20 border border-red-500/50 p-3 flex items-center gap-2">
+          <span className="text-red-400 text-sm font-mono">{error}</span>
+        </div>
+      )}
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold text-accent">Messages</h2>
         <span className="text-gray-400 font-mono">

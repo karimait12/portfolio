@@ -22,7 +22,7 @@ function Portfolio() {
     const fetchData = async () => {
       const [projectsRes, skillsRes, expRes] = await Promise.all([
         supabase.from('projects').select('*').eq('featured', true).order('created_at', { ascending: false }),
-        supabase.from('skills').select('*').order('order'),
+        supabase.from('skills').select('*').order('order_index'),
         supabase.from('experience').select('*').order('start_date', { ascending: false }),
       ]);
 
