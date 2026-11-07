@@ -3,7 +3,9 @@
 
 @theme inline {
   --color-bg: var(--bg);
+  --color-background: var(--bg);
   --color-surface: var(--surface);
+  --color-accent-dim: var(--border);
   --color-surface-2: var(--surface-2);
   --color-border: var(--border);
   --color-text: var(--text);
@@ -72,6 +74,31 @@ body::before {
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+/* Compatibility for legacy admin styles */
+.grid-pattern {
+  background-image: radial-gradient(1200px 600px at 50% -10%, rgba(255,255,255,0.06), transparent 60%);
+}
+
+.tech-border {
+  border: 1px solid var(--border);
+  position: relative;
+}
+
+.neon-glow {
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.neon-glow-text {
+  text-shadow: 0 0 8px var(--accent);
+}
+
+.glass {
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+}
 
 :focus-visible {
   outline: 2px solid var(--accent);
