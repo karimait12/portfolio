@@ -8,6 +8,7 @@ import { Experience } from './components/sections/Experience';
 import { Stack } from './components/Stack';
 import { Projects } from './components/sections/Projects';
 import { Contact } from './components/sections/Contact';
+import Links from './pages/Links';
 import { lazy, Suspense } from 'react';
 const AdminDashboard = lazy(() => import('./pages/admin/Dashboard').then((m) => ({ default: m.AdminDashboard })));
 const AdminLogin = lazy(() => import('./pages/admin/Login').then((m) => ({ default: m.AdminLogin })));
@@ -83,6 +84,7 @@ function AppRoutes() {
       <AnalyticsTracker />
       <Routes>
       <Route path="/" element={<Portfolio />} />
+      <Route path="/links" element={<Links />} />
       <Route path="/admin/login" element={<Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}><AdminLogin /></Suspense>} />
       <Route
         path="/admin"
