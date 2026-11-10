@@ -1,7 +1,7 @@
 export type Social = {
   label: string;
   href: string;
-  icon: 'github' | 'linkedin' | 'instagram' | 'twitter' | 'mail';
+  icon: 'github' | 'linkedin' | 'instagram' | 'twitter' | 'mail' | 'facebook';
 };
 
 export const profile = {
@@ -20,6 +20,8 @@ export const profile = {
     { label: 'GitHub', href: 'https://github.com/karimait16', icon: 'github' },
     { label: 'LinkedIn', href: 'https://ma.linkedin.com/in/abdelkarim-ait-yahia-ba2ab33a7', icon: 'linkedin' },
     { label: 'Instagram', href: 'https://www.instagram.com/aityahiae', icon: 'instagram' },
+       { label: 'Facebook', href: 'https://www.rerey', icon: 'facebook' },
+  
   ] as Social[],
 };
 

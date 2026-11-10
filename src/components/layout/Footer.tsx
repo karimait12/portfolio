@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Copy, Check, Download, Github, Linkedin, Instagram, Mail } from 'lucide-react';
+import { Copy, Check, Download, Github, Linkedin, Instagram, Mail, Facebook } from 'lucide-react';
 import { profile } from '../../data/profile';
 
 export function Footer() {
@@ -20,7 +20,7 @@ export function Footer() {
     }
   };
 
-  const iconMap: Record<string, any> = { github: Github, linkedin: Linkedin, instagram: Instagram };
+  const iconMap: Record<string, any> = { github: Github, linkedin: Linkedin, instagram: Instagram, facebook: Facebook };
 
   return (
     <footer className="relative px-6 py-20">
