@@ -1,27 +1,38 @@
+// src/data/stack.ts
+import type { IconType } from 'react-icons';
 import {
-  SiNextdotjs,
+  SiHtml5,
+  SiCss,
+  SiJavascript,
+  SiTypescript,
   SiReact,
   SiTailwindcss,
-  SiThreedotjs,
-  SiGreensock,
+  SiVite,
   SiFramer,
   SiSupabase,
   SiNodedotjs,
+  SiGit,
+  SiGithub,
+  SiVercel,
 } from 'react-icons/si';
-import { ComponentType } from 'react';
 
-export type StackItem = {
+export interface StackItem {
   name: string;
-  icon: ComponentType<{ size?: number; className?: string }>;
-};
+  icon: IconType;
+}
 
 export const stack: StackItem[] = [
-  { name: 'Next.js', icon: SiNextdotjs },
-  { name: 'React Native', icon: SiReact },
+  { name: 'HTML', icon: SiHtml5 },
+  { name: 'CSS', icon: SiCss },
+  { name: 'JavaScript', icon: SiJavascript },
+  { name: 'TypeScript', icon: SiTypescript },
+  { name: 'React', icon: SiReact },
   { name: 'Tailwind CSS', icon: SiTailwindcss },
-  { name: 'Three.js', icon: SiThreedotjs },
-  { name: 'GSAP', icon: SiGreensock },
+  { name: 'Vite', icon: SiVite },
   { name: 'Motion', icon: SiFramer },
   { name: 'Supabase', icon: SiSupabase },
   { name: 'Node.js', icon: SiNodedotjs },
+  { name: 'Git', icon: SiGit },
+  { name: 'GitHub', icon: SiGithub },
+  { name: 'Vercel', icon: SiVercel },
 ];

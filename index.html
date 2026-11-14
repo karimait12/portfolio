@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en" class="light">
   <head>
     <meta charset="UTF-8" />
     <script>
@@ -7,7 +7,7 @@
         try {
           var stored = localStorage.getItem('theme');
           var root = document.documentElement;
-          var light = stored === 'light';
+          var light = stored !== 'dark';
           root.classList.toggle('light', light);
           root.classList.toggle('dark', !light);
         } catch (e) {}
