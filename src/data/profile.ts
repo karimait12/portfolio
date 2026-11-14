@@ -16,7 +16,6 @@ export const profile = {
   location: 'Somewhere, Earth',
   role: 'Software Developer',
   available: true,
-  cvUrl: '/cv.pdf',
   photo: '/me.png',
   socials: socialLinks as Social[],
 };

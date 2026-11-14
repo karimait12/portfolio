@@ -71,9 +71,7 @@ const LINKS: LinkItem[] = [
     : []),
 ];
 
-const CTA = profile.cvUrl
-  ? { label: 'Download CV', subtitle: profile.role, href: profile.cvUrl }
-  : { label: 'Get in touch', subtitle: profile.email, href: `mailto:${profile.email}` };
+const CTA = { label: 'Get in touch', subtitle: profile.email, href: `mailto:${profile.email}` };
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 

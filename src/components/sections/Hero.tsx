@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowDown, Download } from 'lucide-react';
+import { ArrowDown } from 'lucide-react';
 import { profile } from '../../data/profile';
 
 const ringText = 'OPEN TO OPPORTUNITIES • ';
@@ -95,13 +95,6 @@ export function Hero() {
               style={{ background: 'var(--accent)', color: 'var(--accent-contrast)' }}
             >
               See my work <ArrowDown size={14} />
-            </a>
-            <a
-              href={profile.cvUrl}
-              className="inline-flex items-center gap-2 rounded-full border px-6 py-3 font-mono text-[12px] uppercase tracking-[0.18em] transition-all duration-200 hover:-translate-y-[1px]"
-              style={{ borderColor: 'var(--border)', color: 'var(--text)' }}
-            >
-              <Download size={14} /> Download CV
             </a>
           </motion.div>
         </div>

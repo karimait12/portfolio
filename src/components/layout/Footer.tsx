@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Copy, Check, Download, Github, Linkedin, Instagram, Mail, Facebook } from 'lucide-react';
+import { Copy, Check, Github, Linkedin, Instagram, Mail, Facebook } from 'lucide-react';
 import { profile } from '../../data/profile';
 
 export function Footer() {
@@ -42,13 +42,6 @@ export function Footer() {
             {copied ? <Check size={13} /> : <Copy size={13} />}
             {profile.email}
           </button>
-          <a
-            href={profile.cvUrl}
-            className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.18em]"
-            style={{ background: 'var(--accent)', color: 'var(--accent-contrast)' }}
-          >
-            <Download size={13} /> Download CV
-          </a>
           <div className="flex items-center gap-2">
             {profile.socials.map((s) => {
               const Icon = iconMap[s.icon] ?? Mail;
