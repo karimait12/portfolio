@@ -1,7 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowDown, Download } from 'lucide-react';
 import { profile } from '../../data/profile';
-import { Magnetic } from '../ui/Magnetic';
 
 const ringText = 'OPEN TO OPPORTUNITIES • ';
 
@@ -90,24 +89,20 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
             className="mt-8 flex flex-wrap items-center justify-center gap-4 lg:justify-start"
           >
-            <Magnetic>
-              <a
-                href="#projects"
-                className="inline-flex items-center gap-2 rounded-full px-6 py-3 font-mono text-[12px] uppercase tracking-[0.18em] transition-transform"
-                style={{ background: 'var(--accent)', color: 'var(--accent-contrast)' }}
-              >
-                See my work <ArrowDown size={14} />
-              </a>
-            </Magnetic>
-            <Magnetic>
-              <a
-                href={profile.cvUrl}
-                className="inline-flex items-center gap-2 rounded-full border px-6 py-3 font-mono text-[12px] uppercase tracking-[0.18em]"
-                style={{ borderColor: 'var(--border)', color: 'var(--text)' }}
-              >
-                <Download size={14} /> Download CV
-              </a>
-            </Magnetic>
+            <a
+              href="#projects"
+              className="inline-flex items-center gap-2 rounded-full px-6 py-3 font-mono text-[12px] uppercase tracking-[0.18em] transition-all duration-200 hover:-translate-y-[1px]"
+              style={{ background: 'var(--accent)', color: 'var(--accent-contrast)' }}
+            >
+              See my work <ArrowDown size={14} />
+            </a>
+            <a
+              href={profile.cvUrl}
+              className="inline-flex items-center gap-2 rounded-full border px-6 py-3 font-mono text-[12px] uppercase tracking-[0.18em] transition-all duration-200 hover:-translate-y-[1px]"
+              style={{ borderColor: 'var(--border)', color: 'var(--text)' }}
+            >
+              <Download size={14} /> Download CV
+            </a>
           </motion.div>
         </div>
       </div>

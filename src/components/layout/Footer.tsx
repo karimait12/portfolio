@@ -20,7 +20,7 @@ export function Footer() {
     }
   };
 
-  const iconMap: Record<string, any> = { github: Github, linkedin: Linkedin, instagram: Instagram, facebook: Facebook };
+  const iconMap: Record<string, any> = { github: Github, linkedin: Linkedin, instagram: Instagram, mail: Mail, facebook: Facebook };
 
   return (
     <footer className="relative px-6 py-20">
@@ -57,7 +57,7 @@ export function Footer() {
                   key={s.label}
                   href={s.href}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   aria-label={s.label}
                   className="grid h-10 w-10 place-items-center rounded-full border"
                   style={{ borderColor: 'var(--border)', color: 'var(--text)' }}

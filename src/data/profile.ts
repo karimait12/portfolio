@@ -1,3 +1,5 @@
+import { socialLinks, CONTACT_EMAIL } from './links';
+
 export type Social = {
   label: string;
   href: string;
@@ -10,19 +12,13 @@ export const profile = {
   headline: 'BUILDING DIGITAL PRODUCTS WITH CLARITY AND CRAFT.',
   headlineLines: ['BUILDING', 'DIGITAL', 'PRODUCTS.'],
   bio: "I'm Abdelkarim Ait Yahia, a software developer from Morocco who builds fast, accessible web and mobile products. I care about clean interfaces, solid performance, and shipping things that work.",
-  email: 'karimaityahiaa@gmail.com',
+  email: CONTACT_EMAIL,
   location: 'Somewhere, Earth',
   role: 'Software Developer',
   available: true,
   cvUrl: '/cv.pdf',
   photo: '/me.png',
-  socials: [
-    { label: 'GitHub', href: 'https://github.com/karimait16', icon: 'github' },
-    { label: 'LinkedIn', href: 'https://ma.linkedin.com/in/abdelkarim-ait-yahia-ba2ab33a7', icon: 'linkedin' },
-    { label: 'Instagram', href: 'https://www.instagram.com/aityahiae', icon: 'instagram' },
-       { label: 'Facebook', href: 'https://www.rerey', icon: 'facebook' },
-  
-  ] as Social[],
+  socials: socialLinks as Social[],
 };
 
 export const navLinks = [

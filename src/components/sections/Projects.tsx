@@ -70,7 +70,7 @@ function ProjectCard({ project, index, total, progress }: { project: ProjectItem
             <a
               href={project.liveUrl}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.18em]"
               style={{ background: 'var(--accent)', color: 'var(--accent-contrast)' }}
             >
@@ -79,7 +79,7 @@ function ProjectCard({ project, index, total, progress }: { project: ProjectItem
             <a
               href={project.repoUrl}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               aria-label="GitHub repository"
               className="grid h-10 w-10 place-items-center rounded-full border"
               style={{ borderColor: 'var(--border)', color: 'var(--text)' }}

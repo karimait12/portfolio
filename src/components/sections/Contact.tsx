@@ -66,7 +66,7 @@ export function Contact() {
     }
   };
 
-  const iconMap: Record<string, any> = { github: Github, linkedin: Linkedin, instagram: Instagram };
+  const iconMap: Record<string, any> = { github: Github, linkedin: Linkedin, instagram: Instagram, mail: Mail };
 
   return (
     <section id="contact" className="relative px-6 py-24">
@@ -102,7 +102,7 @@ export function Contact() {
                     key={s.label}
                     href={s.href}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     aria-label={s.label}
                     className="grid h-11 w-11 place-items-center rounded-full border transition-transform hover:-translate-y-1"
                     style={{ borderColor: 'var(--border)', color: 'var(--text)' }}
